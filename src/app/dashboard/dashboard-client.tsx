@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Muted } from "@/components/ui/typography";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function DashboardClient() {
     const [users, setUsers] = useState<any[]>([]);
@@ -22,7 +23,22 @@ export default function DashboardClient() {
             });
     }, []);
 
-    if (loading) return <Muted>Loading...</Muted>;
+    if (loading)
+        return (
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {[...Array(6)].map((_, i) => (
+                    <div
+                        key={i}
+                        className="space-y-3 p-4 border border-gray-200 dark:border-gray-800 rounded-xl"
+                    >
+                        <Skeleton className="h-6 w-32" />
+                        <Skeleton className="h-4 w-48" />
+                        <Skeleton className="h-4 w-24" />
+                    </div>
+                ))}
+            </div>
+        );
+
     if (error)
         return <Muted className="text-red-500">{error}</Muted>;
 
